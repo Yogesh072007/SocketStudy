@@ -53,6 +53,64 @@ Socket programming finds applications in various domains, including web developm
 4.	Networked Games: Online multiplayer games rely on socket programming to facilitate communication between game clients and servers.
 5.	RPC mechanisms: which allow processes to execute code on a remote server, often use socket programming for communication.
 
+## Server-Side code:
+import socket
+
+# Create a socket object
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Bind the socket to the host and port
+server_socket.bind(('localhost', 8000))
+
+# Listen for incoming connections (max 1 connection)
+server_socket.listen(1)
+print("Server is waiting for a connection...")
+
+# Accept the connection
+conn, addr = server_socket.accept()
+print(f"Connected by {addr}")
+
+# Send a message to the client
+conn.send("Hello from the server!".encode())
+
+# Receive a message from the client
+data = conn.recv(1024)
+print(f"Received from client: {data.decode()}")
+
+# Close the connection
+conn.close()
+server_socket.close()
+
+## OUTPUT
+
+<img width="1063" height="182" alt="Screenshot 2025-09-29 102150" src="https://github.com/user-attachments/assets/34537bb1-9178-4669-aca8-77d59f30926a" />
+
+## client side code:
+
+import socket
+
+# Create a socket object
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect to the server
+client_socket.connect(('localhost', 8000))
+
+# Print the client's socket name
+print(f"Client connected from: {client_socket.getsockname()}")
+
+# Receive a message from the server
+server_message = client_socket.recv(1024).decode()
+print(f"Received from server: {server_message}")
+
+# Send a message to the server
+client_socket.send("Acknowledgement received from the client.".encode())
+
+# Close the connection
+client_socket.close()
+
+## OUTPUT
+
+<img width="1056" height="107" alt="Screenshot 2025-09-29 102217" src="https://github.com/user-attachments/assets/6f37e484-22aa-4be3-8317-3c7e237ef723" />
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully
